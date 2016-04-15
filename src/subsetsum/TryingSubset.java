@@ -1,6 +1,7 @@
 package subsetsum;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import cs1c.SongEntry;
 
@@ -39,100 +40,102 @@ public class TryingSubset
       else
       return 0;
     }
-    
-    // divide in two methods and check condition of instance of and call them accordingly
-    public static ArrayList<?> findingSubSet(ArrayList<?> list, double budget)
+    public static ArrayList<SongEntry> findingSubSet(ArrayList<?> list, double budget)
     {
+            return creatingSongList((ArrayList<SongEntry>) list, budget);
+    }
 
-        ArrayList<ArrayList<?>> listOfLists = new ArrayList<ArrayList<?>>();        
+    public static ArrayList<SongEntry> creatingSongList(ArrayList<SongEntry> list, double budget)
+    {
+ 
+        ArrayList<ArrayList<SongEntry>> listOfLists = new ArrayList<ArrayList<SongEntry>>();        
         
         // an empty list
-        ArrayList<?> subList = new ArrayList<Object>();
+        ArrayList<SongEntry> subList = new ArrayList<SongEntry>();
         listOfLists.add(subList);
         
         // list for closest match to the budget
-        ArrayList<?> closestSubList = new ArrayList<Object>();
+        ArrayList<SongEntry> closestSubList = new ArrayList<SongEntry>();
         
-        ArrayList<SongEntry> songList;
-       
         if (budget > sumFunction(list))
         {
             return list;                      
         }
-
-        for (int i = 0; i < list.size(); i++)
-        {                                                  
-            int k = listOfLists.size();
-            int j = 0;                 
-
-            while (j < k)                    
+        
+        else
+            for (int i = 0; i < list.size(); i++)
+            {                                                  
+                int listSize = listOfLists.size();
+                int index = 0;
+                
+            while (index < listSize)                    
             {                    
-                ArrayList<?> currentSet = listOfLists.get(j);
+                ArrayList<SongEntry> currentSet = listOfLists.get(index);
                 
                 double setSum = 0;
                 
-                if (list.get(i) instanceof Double)
-                {                
-                     setSum = sumFunction(currentSet) + (double)list.get(i);
-                     
-                     if(setSum <= budget)                
-                     {
-                     ArrayList<Double> subSet = new ArrayList<Double>();
-                                          
-                     for(int m = 0 ; m < currentSet.size() ; m++)
-                     {
-                         subSet.add((Double) currentSet.get(m));                            
-                     }                        
-                     subSet.add((Double) list.get(i));                                                
-                     listOfLists.add(subSet);
-                         
-                     if(setSum == budget)                    
-                     {                            
-                         return  subSet;
-                     }
-                     // for closest match 
-                     else if (sumFunction(closestSubList) < setSum)
-                     {
-                         closestSubList = subSet;
-                     }
-                 } 
-                 j++; 
+                setSum = sumFunction(currentSet) + (double)list.get(i).getDuration();                
+                
+                if(setSum <= budget)                
+                {
+                ArrayList<SongEntry> subSet = new ArrayList<SongEntry>();
+                
+                
+                for(int m = 0 ; m < currentSet.size() ; m++)
+                {
+                    subSet.add(currentSet.get(m));                            
+                }                        
+                subSet.add(list.get(i));                                                
+                listOfLists.add(subSet);
+                    
+                if(setSum == budget)                    
+                {   
+                    System.out.println("found perfect match");                        
+                    return  subSet;
+                }
+                // for closest match 
+                else if (sumFunction(closestSubList) < setSum)
+                {
+                    closestSubList = subSet;
                 }
                 
-                else if (list.get(i) instanceof SongEntry)
-                {
-                    songList = (ArrayList<SongEntry>) list;
-                    setSum = sumFunction(currentSet) + (double)songList.get(i).getDuration();                
-                    
-                    if(setSum <= budget)                
-                    {
-                    ArrayList<SongEntry> subSet = new ArrayList<SongEntry>();
-                    
-                    
-                    for(int m = 0 ; m < currentSet.size() ; m++)
-                    {
-                        subSet.add((SongEntry) currentSet.get(m));                            
-                    }                        
-                    subSet.add((SongEntry) list.get(i));                                                
-                    listOfLists.add(subSet);
-                        
-                    if(setSum == budget)                    
-                    {                            
-                        return  subSet;
-                    }
-                    // for closest match 
-                    else if (sumFunction(closestSubList) < setSum)
-                    {
-                        closestSubList = subSet;
-                    }
-                } 
-                j++;                                                            
-            }                 
-            
-         }
-         
-        } 
-        return closestSubList;
+                memoryOptimization(listOfLists, subSet);
+            } 
+            index++;                                                            
+        }                 
+        
+     }
+    return closestSubList;
+               
+    }
+  
+    public static ArrayList<ArrayList<SongEntry>> memoryOptimization(ArrayList<ArrayList<SongEntry>> listOfLists, ArrayList<SongEntry> subSet)
+    {
+        Iterator<ArrayList<SongEntry>> itr = listOfLists.iterator();
+        
+        while(itr.hasNext())
+        {
+            ArrayList<SongEntry> currentSet = itr.next();
+           
+            if(subSet.subList(0, subSet.size()-1).equals(currentSet))
+            {   
+                System.out.println("sub list " + subSet.subList(0, subSet.size()-1));
+                System.out.println("current set of list " + currentSet);
+                System.out.println("removing common subsets");
+                itr.remove();
+            }      
+        }
+//        for(int i = 0; i < listOfLists.size(); i++)
+//        {
+//            if(list.subList(0, list.size()-1).equals(listOfLists.get(i)))
+//            {
+//                listOfLists.remove(listOfLists.get(i));
+//
+//            }
+//        }
+        System.out.println("list is " + listOfLists);
+        return listOfLists; 
+        
     }
 }
         
