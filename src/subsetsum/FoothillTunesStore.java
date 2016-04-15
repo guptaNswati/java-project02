@@ -55,18 +55,22 @@ public class FoothillTunesStore
 		} while(!keyboard.hasNextDouble());
 
 		double duration = Double.parseDouble(keyboard.nextLine());
-
+		// converting duration from minutes to secs
+        duration = duration * 60;
 		// for measuring run time
 		long startTime, estimatedTime;
 		
 		// capture the start time
 		startTime = System.nanoTime();    
 
+		
 		// TODO: implement finding subset of groceries that is closest to meeting budget
 		// NOTE: In this part, you only need to keep track of the price of each item,
-		// 		 and not the name of the item you are buying.
-		//--ArrayList<SongEntry> playlist = SubsetSum.findSubset(songList, duration);
-
+		// 		 and not the name of the item you are buying. 
+		
+		// casting method to return list of SongEntry Objects
+		ArrayList<SongEntry> playlist = (ArrayList<SongEntry>) SubsetSum.findSubset(songList, duration);
+		
 		// report algorithm time
 		estimatedTime = System.nanoTime() - startTime;
 		
@@ -75,7 +79,7 @@ public class FoothillTunesStore
 				+ TimeConverter.convertTimeToString(estimatedTime));
 
 		System.out.println("Songs in play list:");
-		//--System.out.println(playlist);
+		System.out.println(playlist);
 		
 		System.err.flush();
 		System.out.println("Done with FoothillTunesStore.");
