@@ -70,7 +70,7 @@ public class FoothillTunesStore
 		
 		// casting method to return list of SongEntry Objects
 		ArrayList<SongEntry> playlist = (ArrayList<SongEntry>) SubsetSum.findSubset(songList, duration);
-		
+
 		// report algorithm time
 		estimatedTime = System.nanoTime() - startTime;
 		

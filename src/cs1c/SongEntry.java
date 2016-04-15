@@ -1,4 +1,6 @@
 package cs1c;
+
+
 /**
  * One object of class SongEntry stores a simplified version of the genre data set from 
  * the Million Song Dataset.
@@ -43,6 +45,7 @@ public class SongEntry implements Comparable<SongEntry>
 	public int getDuration() 
 	{	return duration; }
 
+	
 	/**
 	 * accessor method returns the artist name (could be space-delimited for first and last name)
 	 */
@@ -64,7 +67,7 @@ public class SongEntry implements Comparable<SongEntry>
 			this.duration = 0;
 		this.duration = duration;
 	}
-
+	
 	/**
 	 * mutator method specifies the entry to perform comparison
 	 */

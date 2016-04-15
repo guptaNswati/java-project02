@@ -3,6 +3,7 @@ package subsetsum;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import cs1c.SongEntry;
 import cs1c.TimeConverter;
 
 
@@ -28,6 +29,7 @@ public class ShoppingBag
 	public ShoppingBag(String filePath)
 	{
 		// TODO: Define the class GroceriesFileReader
+	    // defined GroceriesFileReader class that returns list of grocery prices
 		GroceriesFileReader reader = new GroceriesFileReader();
 
 		// TODO: Define the readFile() method which reads the CSV (Comma Seperated Value) file 
@@ -44,8 +46,7 @@ public class ShoppingBag
 			return;
 		} 
 
-		System.out.printf("The list of groceries has %d items. \n", priceOfGroceries.size());
-
+		System.out.printf("The list of groceries has %d items. \n", priceOfGroceries.size());			
 	}
 
 
@@ -95,7 +96,7 @@ public class ShoppingBag
 		// TODO: implement finding subset of groceries that is closest to meeting the user's budget.
 		// NOTE: In this part, you only need to keep track of the price of each item,
 		// 		 and not the name of the item you are buying.
-		ArrayList<Double> purchases = SubsetSum.findSubset(shoppingList, budget);
+		ArrayList<Double> purchases = (ArrayList<Double>) SubsetSum.findSubset(shoppingList, budget);
 
 		// stop the timer
 		estimatedTime = System.nanoTime() - startTime;
@@ -107,7 +108,15 @@ public class ShoppingBag
 		System.out.println("Purchased grocery prices are:");
 		System.out.println(purchases);
 		
-		System.err.flush();
-		System.out.println("Done with ShoppingBag.");
+		System.err.flush(); 
+        System.out.println("Done with ShoppingBag.");
+        
+        //  part 2
+        System.out.println();
+        System.out.println("Create list of songs: " + "\n");
+        
+        // creating an object of FoothillTunesStore for creating list of songs        
+        FoothillTunesStore listOfSongs = new FoothillTunesStore();
+        listOfSongs.main(args);
 	}
 }

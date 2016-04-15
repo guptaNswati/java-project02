@@ -113,13 +113,13 @@ public class SubsetSum
 
                 } // ending while block                              
 
-            }// ending outer for loop                      
+            } // ending outer for loop                      
 
         return closestSubList;       
     }
 
     /**
-     * 
+     * creates a list of songs within target duration and for saving memory throws away unnecessary subsets
      * @param list[ArrayList containing Objects of Type SongEntry]
      * @param budget [users target duration in double]
      * @return list of song within duration
@@ -144,47 +144,33 @@ public class SubsetSum
         else
             for (int i = 0; i < list.size(); i++)
             {                                                  
-                int listSize = listOfLists.size();
-                int index = 0;  
+                Iterator<ArrayList<SongEntry>> songsIterator = listOfLists.iterator();
 
-                while (index < listSize)                    
-
+                while (songsIterator.hasNext())                    
                 {                    
-                    ArrayList<SongEntry> currentSet = listOfLists.get(index);
+                    ArrayList<SongEntry> currentSet = songsIterator.next();
 
-                    double setSum = 0;
+                    double setSum = sumFunction(currentSet) + (double)list.get(i).getDuration();
 
-                    setSum = sumFunction(currentSet) + (double)list.get(i).getDuration();                
-
-                    if(setSum <= budget)                
+                    if (setSum <= budget)                
                     {
-                        ArrayList<SongEntry> subSet = new ArrayList<SongEntry>();
+                        currentSet.add(list.get(i));
 
-
-                        for(int m = 0 ; m < currentSet.size() ; m++)
-                        {
-                            subSet.add(currentSet.get(m));                            
-                        }                        
-                        subSet.add(list.get(i));                                                
-                        listOfLists.add(subSet);
-
-                        if(setSum == budget)                    
-                        {                            
-                            return  subSet;
+                        if (setSum == budget)                    
+                        {                      
+                            return  currentSet;
                         }
-                        // for closest match 
+                        
                         else if (sumFunction(closestSubList) < setSum)
                         {
-                            closestSubList = subSet;
+                            closestSubList = currentSet;
                         }
+                        
                     } // ending of if(setSum <= budget) block
+               
+                } // ending while block                 
 
-                    index++;                                                            
-
-                } // ending while block                              
-
-            } // ending outer for loop 
-
+            } // ending outer for loop         
         return closestSubList;              
     }
 
