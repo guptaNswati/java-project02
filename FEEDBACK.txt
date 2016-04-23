@@ -1,0 +1,29 @@
+FEEDBACK:
+
+Well done!
+
+
+Good implementation of the class Subsetsum findSubset() method.
+
+Very good stress testing of your code.
+
+
+-0 Incomplete return type in class SubsetSum findSubset() method resulting in compiler error:
+Type mismatch: cannot convert from ArrayList<capture#1-of ?> to ArrayList<Double>
+   Recall that the goal of using generics is to avoid casting.
+   Instead of:
+       public static ArrayList<?> findSubset(ArrayList<?> list, double budget)
+   Consider parameterizing it with a type:
+   		public static <T> ArrayList<T> findSubset(ArrayList<T> list, double budget) {
+   
+   Take a look at the following Java documentation on Wildcards:
+   https://docs.oracle.com/javase/tutorial/extra/generics/wildcards.html
+ 
+
+Extra Credit Opportunity:
++2 implementation of findSubset() for SongEntry type.
+
++2 clearly defined test cases for findSubset() method.   
+  
+-Bita.
+
